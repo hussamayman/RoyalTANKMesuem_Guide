@@ -46,8 +46,8 @@ async def tank_info(file: UploadFile,  db: Session = Depends(get_db), Question: 
         raise HTTPException(status_code=404, detail="no match")
 
     return {
-        "prediction_index": idx.item(),
-        "tank_info": Tank_info,
+        # "prediction_index": idx.item(),
+        # "tank_info": Tank_info,
         "chatbot_response": response
     }
 @router.get("/tanks/list/")

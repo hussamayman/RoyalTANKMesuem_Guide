@@ -1,0 +1,39 @@
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8000:8000"
+    command: python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/app
+    develop:
+      watch:
+        - action: rebuild
+          path: ./requirements.txt
+        # - action: rebuild
+        #   path: ./Dockerfile
+        - action: restart
+          path: ./RoyalTANKMesuem_Guide
+    env_file:
+      - ./.env
+    depends_on:
+      database_service:
+        condition: service_healthy  
+  database_service:
+    image: postgres:17.5
+    ports:
+      - "5432:5432"
+    volumes:
+      - Docker_Volumes:/var/lib/postgresql/data  
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    env_file:
+      - ./.env
+volumes:
+    Docker_Volumes:      

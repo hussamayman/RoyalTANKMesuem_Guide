@@ -10,17 +10,29 @@ from tkinter import filedialog
 import os
 
 # ── Config ──────────────────────────────────────────────────────────────────
-MODEL_PATH  = "Classifer/tank_model.pth"
+MODEL_PATH  = "Classifer/best_model.pt"
 TRAIN_PATH  = r"C:\Users\hussa\Desktop\data_split\train"   # used to recover class names
+CLASS_NAMES = [
+    "AMX 13",
+    "Fox",
+    "Karameh",
+    "M42 Duster",
+    "M48-Patton",
+    "PAK40 Anti-tank gun",
+    "Panther",
+    "Renault FT-17",
+    "Saladdin",
+    "The DA Vinci",
+    "Tiger"
+]
 # ─────────────────────────────────────────────────────────────────────────────
 
 def get_class_names():
     """Load class names from the original training folder if available."""
-    if os.path.isdir(TRAIN_PATH):
-        dataset = datasets.ImageFolder(TRAIN_PATH)
-        return dataset.classes
-    # Fallback: return None and we'll show class indices instead
-    return None
+    # if os.path.isdir(TRAIN_PATH):
+    #     dataset = datasets.ImageFolder(TRAIN_PATH)
+    #     return dataset.classes
+    return CLASS_NAMES
 
 
 def load_model(device: torch.device):
